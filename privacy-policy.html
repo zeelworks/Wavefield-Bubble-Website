@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Wavefield Bubble</title>
+    <meta name="description" content="Privacy Policy for Wavefield Bubble - Learn how we collect, use, and protect your data in compliance with GDPR.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: #000;
+            color: #fff;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* Background Animations */
+        .background-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.3; transform: scale(1.05) rotate(5deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #00ffff; }
+            50% { text-shadow: 0 0 30px #0080ff; }
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            text-decoration: none;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .back-link {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 400;
+            padding: 10px 20px;
+            border: 1px solid #00ffff;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #00ffff;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #00ffff;
+        }
+
+        .email-link {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .email-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
+            margin-top: 60px;
+        }
+
+        .footer a {
+            color: #00ffff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Mesh -->
+    <div class="background-mesh" id="backgroundMesh"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">WAVEFIELD BUBBLE</a>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Privacy Policy</h1>
+        <p class="last-updated">Last updated: September 7, 2025</p>
+
+        <div class="section">
+            <h2 class="section-title">1. Introduction</h2>
+            <p>
+                Welcome to Wavefield Bubble ("we," "our," or "us"). This Privacy Policy explains how we collect, 
+                use, and protect your personal information when you use our mobile game Wavefield Bubble 
+                (the "App"). We are committed to protecting your privacy and complying with applicable 
+                data protection laws, including the General Data Protection Regulation (GDPR).
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">2. Information We Collect</h2>
+            <p>We collect and process the following types of information:</p>
+            
+            <h3 class="highlight">2.1 Personal Information</h3>
+            <ul>
+                <li><strong>Contact Information:</strong> When you contact us for support, we collect your email address and any information you provide in your message.</li>
+            </ul>
+
+            <h3 class="highlight">2.2 Technical Information</h3>
+            <ul>
+                <li><strong>Device Information:</strong> Device type, operating system version, unique device identifiers</li>
+                <li><strong>App Usage Data:</strong> Game progress, settings preferences, tutorial completion status</li>
+                <li><strong>Performance Data:</strong> App crashes, errors, and performance metrics</li>
+            </ul>
+
+            <h3 class="highlight">2.3 Subscription Information</h3>
+            <ul>
+                <li><strong>Purchase Data:</strong> Subscription status, purchase history (processed through Apple's App Store and RevenueCat)</li>
+                <li><strong>Entitlements:</strong> Pro features access status</li>
+            </ul>
+
+            <h3 class="highlight">2.4 Advertising Information</h3>
+            <ul>
+                <li><strong>Ad Interaction Data:</strong> When ads are displayed or interacted with (via Google Mobile Ads)</li>
+                <li><strong>Advertising Identifiers:</strong> Device advertising ID for personalized ads</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">3. How We Use Your Information</h2>
+            <p>We use the collected information for the following purposes:</p>
+            <ul>
+                <li><strong>App Functionality:</strong> To provide core game features and maintain your progress</li>
+                <li><strong>Subscription Management:</strong> To manage Pro subscriptions and unlock premium features</li>
+                <li><strong>Customer Support:</strong> To respond to your inquiries and provide technical assistance</li>
+                <li><strong>App Improvement:</strong> To analyze usage patterns and improve game performance</li>
+                <li><strong>Advertising:</strong> To display relevant advertisements (for free version users)</li>
+                <li><strong>Legal Compliance:</strong> To comply with legal obligations and protect our rights</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">4. Third-Party Services</h2>
+            <p>Our App integrates with the following third-party services:</p>
+            
+            <h3 class="highlight">4.1 RevenueCat</h3>
+            <p>
+                We use RevenueCat to manage in-app subscriptions. RevenueCat processes subscription data 
+                and customer information according to their privacy policy.
+                <br><strong>Data shared:</strong> Purchase information, user identifiers, subscription status
+            </p>
+
+            <h3 class="highlight">4.2 Google Mobile Ads (AdMob)</h3>
+            <p>
+                We use Google AdMob to display advertisements in the free version of our app. Google may 
+                collect and process advertising data for personalization and measurement purposes.
+                <br><strong>Data shared:</strong> Device identifiers, ad interaction data, usage analytics
+            </p>
+
+            <h3 class="highlight">4.3 Apple App Store</h3>
+            <p>
+                All purchases are processed through Apple's App Store. Apple handles payment processing 
+                and provides us with anonymized purchase confirmation data.
+                <br><strong>Data shared:</strong> Purchase confirmations, subscription status
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">5. Data Storage and Security</h2>
+            <p>
+                We implement appropriate technical and organizational measures to protect your personal information:
+            </p>
+            <ul>
+                <li><strong>Local Storage:</strong> Game progress and preferences are stored locally on your device</li>
+                <li><strong>Encryption:</strong> Data transmitted to third-party services is encrypted in transit</li>
+                <li><strong>Access Controls:</strong> Limited access to personal data on a need-to-know basis</li>
+                <li><strong>Regular Updates:</strong> We regularly update our security measures and practices</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">6. Your Rights (GDPR)</h2>
+            <p>If you are located in the European Union, you have the following rights:</p>
+            <ul>
+                <li><strong>Right to Access:</strong> Request information about personal data we process</li>
+                <li><strong>Right to Rectification:</strong> Correct inaccurate or incomplete personal data</li>
+                <li><strong>Right to Erasure:</strong> Request deletion of your personal data</li>
+                <li><strong>Right to Restrict Processing:</strong> Limit how we process your personal data</li>
+                <li><strong>Right to Data Portability:</strong> Receive your data in a portable format</li>
+                <li><strong>Right to Object:</strong> Object to processing based on legitimate interests</li>
+                <li><strong>Right to Withdraw Consent:</strong> Withdraw consent for data processing</li>
+            </ul>
+            <p>To exercise these rights, please contact us using the information provided below.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">7. Data Retention</h2>
+            <p>We retain your personal information only as long as necessary for the purposes outlined in this policy:</p>
+            <ul>
+                <li><strong>Game Data:</strong> Stored locally on your device until app deletion</li>
+                <li><strong>Support Communications:</strong> Retained for 2 years after last contact</li>
+                <li><strong>Subscription Data:</strong> Retained as long as subscription is active plus 1 year</li>
+                <li><strong>Analytics Data:</strong> Anonymized and retained for up to 2 years</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">8. Children's Privacy</h2>
+            <p>
+                Our App is not specifically directed at children under 13 years of age. We do not knowingly 
+                collect personal information from children under 13. If we discover that we have collected 
+                personal information from a child under 13, we will delete that information immediately. 
+                If you are a parent or guardian and believe your child has provided personal information, 
+                please contact us.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">9. International Data Transfers</h2>
+            <p>
+                Your information may be transferred to and processed in countries other than your country of 
+                residence. These countries may have different data protection laws. When we transfer your 
+                information internationally, we ensure appropriate safeguards are in place to protect your 
+                personal information in accordance with applicable data protection laws.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">10. Changes to This Privacy Policy</h2>
+            <p>
+                We may update this Privacy Policy from time to time. We will notify you of any material 
+                changes by posting the new Privacy Policy in the App and updating the "Last updated" date. 
+                Your continued use of the App after changes become effective constitutes acceptance of the 
+                revised Privacy Policy.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">11. Contact Us</h2>
+            <p>
+                If you have any questions about this Privacy Policy, want to exercise your rights, 
+                or need to contact our Data Protection Officer, please reach out to us:
+            </p>
+            
+            <div class="contact-info">
+                <p><strong>Email:</strong> <a href="mailto:zeelworksmail@gmail.com" class="email-link">zeelworksmail@gmail.com</a></p>
+                <p><strong>Subject Line:</strong> "Wavefield Bubble - Privacy Policy Inquiry"</p>
+                <p><strong>Response Time:</strong> We aim to respond to all inquiries within 48 hours</p>
+            </div>
+
+            <p>
+                For GDPR-related requests, please include "GDPR Request" in your subject line and specify 
+                which rights you would like to exercise. We will respond within 30 days as required by law.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Wavefield Bubble. All rights reserved.</p>
+            <p>
+                <a href="index.html">Home</a> |
+                <a href="terms-conditions.html">Terms & Conditions</a> |
+                <a href="mailto:zeelworksmail@gmail.com">Contact</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background mesh
+        function createBackgroundMesh() {
+            const container = document.getElementById('backgroundMesh');
+            const triangleCount = 30;
+
+            for (let i = 0; i < triangleCount; i++) {
+                const triangle = document.createElement('div');
+                triangle.className = 'triangle';
+                
+                const size = Math.random() * 8 + 3;
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                const animationDelay = Math.random() * 6;
+
+                triangle.style.left = x + 'px';
+                triangle.style.top = y + 'px';
+                triangle.style.borderLeft = size + 'px solid transparent';
+                triangle.style.borderRight = size + 'px solid transparent';
+                triangle.style.borderBottom = size * 1.732 + 'px solid rgba(0, 255, 255, 0.2)';
+                triangle.style.animationDelay = animationDelay + 's';
+
+                container.appendChild(triangle);
+            }
+        }
+
+        // Initialize background
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackgroundMesh();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const container = document.getElementById('backgroundMesh');
+            container.innerHTML = '';
+            createBackgroundMesh();
+        });
+    </script>
+</body>
+</html>

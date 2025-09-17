@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Wavefield Bubble</title>
+    <meta name="description" content="Terms and Conditions for Wavefield Bubble - Learn about the rules and guidelines for using our game.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: #000;
+            color: #fff;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* Background Animations */
+        .background-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.3; transform: scale(1.05) rotate(-5deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #00ffff; }
+            50% { text-shadow: 0 0 30px #0080ff; }
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            text-decoration: none;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .back-link {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 400;
+            padding: 10px 20px;
+            border: 1px solid #00ffff;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #00ffff;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        .warning-box {
+            background: rgba(255, 69, 0, 0.1);
+            border: 1px solid rgba(255, 69, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff4500;
+        }
+
+        .info-box {
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #00ffff;
+        }
+
+        .email-link {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .email-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
+            margin-top: 60px;
+        }
+
+        .footer a {
+            color: #00ffff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Mesh -->
+    <div class="background-mesh" id="backgroundMesh"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">WAVEFIELD BUBBLE</a>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Terms & Conditions</h1>
+        <p class="last-updated">Last updated: September 7, 2025</p>
+
+        <div class="section">
+            <h2 class="section-title">1. Acceptance of Terms</h2>
+            <p>
+                Welcome to Wavefield Bubble! These Terms and Conditions ("Terms") constitute a legally binding 
+                agreement between you ("User," "you," or "your") and us ("Developer," "we," "us," or "our") 
+                regarding your use of the Wavefield Bubble mobile application (the "App").
+            </p>
+            <p>
+                By downloading, installing, accessing, or using the App, you agree to be bound by these Terms. 
+                If you do not agree to these Terms, please do not use the App.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">2. Description of Service</h2>
+            <p>
+                Wavefield Bubble is a physics-based mobile game available on iOS platforms. The App provides:
+            </p>
+            <ul>
+                <li>Interactive gameplay featuring deformable mesh physics</li>
+                <li>Single-player gaming experience</li>
+                <li>In-app purchase options for premium features ("Pro" version)</li>
+                <li>Advertisement display for free version users</li>
+                <li>Local storage of game progress and settings</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">3. User Account and Eligibility</h2>
+            <h3 class="highlight">3.1 Age Requirements</h3>
+            <p>
+                You must be at least 13 years old to use this App. If you are under 18, you must have 
+                permission from a parent or legal guardian to use the App and make any purchases.
+            </p>
+
+            <h3 class="highlight">3.2 Account Responsibility</h3>
+            <p>
+                You are responsible for maintaining the security of your device and any account information. 
+                We are not liable for any loss or damage arising from unauthorized use of your device or account.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">4. In-App Purchases and Subscriptions</h2>
+            <h3 class="highlight">4.1 Pro Subscription</h3>
+            <p>
+                The App offers optional paid subscriptions ("Pro" features) that provide:
+            </p>
+            <ul>
+                <li>Ad-free gaming experience</li>
+                <li>Access to premium features</li>
+                <li>Enhanced gameplay options</li>
+            </ul>
+
+            <h3 class="highlight">4.2 Payment Processing</h3>
+            <p>
+                All purchases are processed through Apple's App Store. Payment will be charged to your 
+                Apple ID account. Subscriptions automatically renew unless auto-renewal is turned off 
+                at least 24 hours before the end of the current period.
+            </p>
+
+            <h3 class="highlight">4.3 Refunds</h3>
+            <p>
+                Refund requests should be directed to Apple through the App Store, as we do not directly 
+                process payments. Refund policies are subject to Apple's terms and conditions.
+            </p>
+
+            <div class="info-box">
+                <p><strong>Important:</strong> Subscription management is handled through your Apple ID settings. 
+                You can cancel subscriptions at any time through your App Store account settings.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">5. User Conduct and Prohibited Uses</h2>
+            <p>You agree not to:</p>
+            <ul>
+                <li>Modify, reverse engineer, or attempt to extract source code from the App</li>
+                <li>Use the App for any unlawful purpose or in violation of these Terms</li>
+                <li>Attempt to gain unauthorized access to any part of the App or its systems</li>
+                <li>Use automated scripts, bots, or other automated means to interact with the App</li>
+                <li>Interfere with or disrupt the App's functionality or servers</li>
+                <li>Distribute, sell, or transfer your access to the App to third parties</li>
+                <li>Use the App to transmit any malicious code or harmful content</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">6. Intellectual Property Rights</h2>
+            <h3 class="highlight">6.1 Our Rights</h3>
+            <p>
+                The App, including all content, features, functionality, graphics, code, and design, 
+                is owned by us and is protected by copyright, trademark, and other intellectual property laws.
+            </p>
+
+            <h3 class="highlight">6.2 Limited License</h3>
+            <p>
+                We grant you a limited, non-exclusive, non-transferable license to download, install, 
+                and use the App for personal, non-commercial purposes, subject to these Terms.
+            </p>
+
+            <h3 class="highlight">6.3 Third-Party Content</h3>
+            <p>
+                The App may include content from third parties (such as advertisements). We do not 
+                claim ownership of such third-party content and are not responsible for its accuracy or legality.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">7. Privacy and Data Collection</h2>
+            <p>
+                Your privacy is important to us. Our collection and use of personal information is 
+                governed by our Privacy Policy, which is incorporated into these Terms by reference. 
+                Please review our <a href="privacy-policy.html" class="email-link">Privacy Policy</a> 
+                to understand our data practices.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">8. Third-Party Services</h2>
+            <p>The App integrates with the following third-party services:</p>
+            
+            <h3 class="highlight">8.1 RevenueCat</h3>
+            <p>
+                Used for subscription management. Your use of RevenueCat services is subject to 
+                their terms of service and privacy policy.
+            </p>
+
+            <h3 class="highlight">8.2 Google AdMob</h3>
+            <p>
+                Used to display advertisements in the free version. Your interaction with ads is 
+                subject to Google's advertising terms and privacy policy.
+            </p>
+
+            <h3 class="highlight">8.3 Apple App Store</h3>
+            <p>
+                The App is distributed through Apple's App Store and is subject to Apple's 
+                App Store Review Guidelines and Terms of Service.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">9. App Availability and Updates</h2>
+            <h3 class="highlight">9.1 Availability</h3>
+            <p>
+                We strive to keep the App available, but we cannot guarantee uninterrupted service. 
+                We may temporarily suspend the App for maintenance, updates, or other reasons.
+            </p>
+
+            <h3 class="highlight">9.2 Updates</h3>
+            <p>
+                We may release updates to improve functionality, fix bugs, or add features. 
+                Some updates may be required for continued use of the App.
+            </p>
+
+            <h3 class="highlight">9.3 Discontinuation</h3>
+            <p>
+                We reserve the right to discontinue the App or any features at any time with reasonable notice.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">10. Disclaimers and Limitation of Liability</h2>
+            
+            <div class="warning-box">
+                <h3 class="highlight">10.1 Disclaimer of Warranties</h3>
+                <p>
+                    THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND. 
+                    WE DISCLAIM ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING 
+                    WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+                </p>
+            </div>
+
+            <h3 class="highlight">10.2 Limitation of Liability</h3>
+            <p>
+                To the maximum extent permitted by law, we shall not be liable for any indirect, 
+                incidental, special, consequential, or punitive damages, including loss of data, 
+                loss of profits, or business interruption.
+            </p>
+
+            <h3 class="highlight">10.3 Maximum Liability</h3>
+            <p>
+                Our total liability for any claims arising from your use of the App shall not exceed 
+                the amount you paid us in the 12 months preceding the claim.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">11. Indemnification</h2>
+            <p>
+                You agree to indemnify and hold us harmless from any claims, damages, losses, 
+                liabilities, and expenses (including legal fees) arising from your use of the App, 
+                violation of these Terms, or infringement of any third-party rights.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">12. Termination</h2>
+            <h3 class="highlight">12.1 Termination by You</h3>
+            <p>You may terminate your use of the App at any time by deleting it from your device.</p>
+
+            <h3 class="highlight">12.2 Termination by Us</h3>
+            <p>
+                We may terminate or suspend your access to the App immediately if you violate these Terms 
+                or engage in prohibited conduct.
+            </p>
+
+            <h3 class="highlight">12.3 Effect of Termination</h3>
+            <p>
+                Upon termination, your right to use the App ceases immediately. Provisions that should 
+                survive termination (such as liability limitations) will remain in effect.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">13. Governing Law and Dispute Resolution</h2>
+            <h3 class="highlight">13.1 Governing Law</h3>
+            <p>
+                These Terms are governed by and construed in accordance with the laws of the jurisdiction 
+                where the developer is located, without regard to conflict of law provisions.
+            </p>
+
+            <h3 class="highlight">13.2 Dispute Resolution</h3>
+            <p>
+                Any disputes arising from these Terms or your use of the App should first be addressed 
+                through direct communication with us. If informal resolution fails, disputes will be 
+                resolved through binding arbitration or in courts of competent jurisdiction.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">14. Changes to Terms</h2>
+            <p>
+                We may update these Terms from time to time. We will notify users of material changes 
+                through the App or other reasonable means. Continued use of the App after changes 
+                constitutes acceptance of the updated Terms.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">15. Severability</h2>
+            <p>
+                If any provision of these Terms is found to be unenforceable, the remaining provisions 
+                will continue in full force and effect, and the unenforceable provision will be modified 
+                to reflect the parties' intent as closely as possible.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">16. Contact Information</h2>
+            <p>
+                If you have any questions about these Terms and Conditions, please contact us:
+            </p>
+            
+            <div class="info-box">
+                <p><strong>Email:</strong> <a href="mailto:zeelworksmail@gmail.com" class="email-link">zeelworksmail@gmail.com</a></p>
+                <p><strong>Subject Line:</strong> "Wavefield Bubble - Terms & Conditions Inquiry"</p>
+                <p><strong>Response Time:</strong> We aim to respond within 48 hours</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">17. Entire Agreement</h2>
+            <p>
+                These Terms, together with our Privacy Policy, constitute the entire agreement between 
+                you and us regarding the App and supersede all prior or contemporaneous communications 
+                and proposals, whether oral or written.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Wavefield Bubble. All rights reserved.</p>
+            <p>
+                <a href="index.html">Home</a> |
+                <a href="privacy-policy.html">Privacy Policy</a> |
+                <a href="mailto:zeelworksmail@gmail.com">Contact</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background mesh
+        function createBackgroundMesh() {
+            const container = document.getElementById('backgroundMesh');
+            const triangleCount = 30;
+
+            for (let i = 0; i < triangleCount; i++) {
+                const triangle = document.createElement('div');
+                triangle.className = 'triangle';
+                
+                const size = Math.random() * 8 + 3;
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                const animationDelay = Math.random() * 6;
+
+                triangle.style.left = x + 'px';
+                triangle.style.top = y + 'px';
+                triangle.style.borderLeft = size + 'px solid transparent';
+                triangle.style.borderRight = size + 'px solid transparent';
+                triangle.style.borderBottom = size * 1.732 + 'px solid rgba(0, 255, 255, 0.2)';
+                triangle.style.animationDelay = animationDelay + 's';
+
+                container.appendChild(triangle);
+            }
+        }
+
+        // Initialize background
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackgroundMesh();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const container = document.getElementById('backgroundMesh');
+            container.innerHTML = '';
+            createBackgroundMesh();
+        });
+    </script>
+</body>
+</html>

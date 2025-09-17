@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavefield Bubble - Deform • Escape • Collect</title>
+    <meta name="description" content="Navigate through a deformable triangular mesh world. Collect cyan orbs while avoiding dangerous obstacles in this mesmerizing physics-based game.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background Mesh */
+        .background-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff; }
+            50% { text-shadow: 0 0 30px #0080ff, 0 0 40px #0080ff, 0 0 50px #0080ff; }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            text-decoration: none;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00ffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            animation: glow 3s ease-in-out infinite, fadeInUp 1s ease-out;
+            background: linear-gradient(45deg, #00ffff, #0080ff, #00ffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 40px;
+            animation: slideInLeft 1s ease-out 0.5s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1.5s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00ffff, #0080ff);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #00ffff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #00ffff;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .screenshot-placeholder {
+            aspect-ratio: 9/16;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 2px dashed rgba(0, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #00ffff;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-placeholder:hover {
+            border-color: #00ffff;
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        /* Download Section */
+        .download {
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 80px 40px;
+            text-align: center;
+            margin: 100px 0;
+        }
+
+        .download-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .download-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        /* Floating Orbs */
+        .floating-orb {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #00ffff, #0080ff);
+            border-radius: 50%;
+            z-index: -1;
+            animation: floatOrb 8s linear infinite;
+        }
+
+        @keyframes floatOrb {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Mesh -->
+    <div class="background-mesh" id="backgroundMesh"></div>
+
+    <!-- Floating Orbs -->
+    <div class="floating-orb" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-orb" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="floating-orb" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="floating-orb" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="floating-orb" style="left: 90%; animation-delay: 8s;"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">WAVEFIELD BUBBLE</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="privacy-policy.html">Privacy</a></li>
+                <li><a href="terms-conditions.html">Terms</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">WAVEFIELD BUBBLE</h1>
+            <p class="hero-subtitle">Deform • Escape • Collect</p>
+            <p class="hero-description">
+                Navigate through a mesmerizing deformable triangular mesh world. 
+                Control your orb with precision, collect cyan rewards, and avoid deadly obstacles 
+                in this physics-based adventure that challenges your reflexes and strategy.
+            </p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">Download Now</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <h2 class="section-title fade-in">Game Features</h2>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🌊</div>
+                <h3 class="feature-title">Deformable Mesh Physics</h3>
+                <p class="feature-description">
+                    Experience unique gameplay with a living, breathing triangular mesh that responds 
+                    to your movements and creates dynamic obstacles.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Precision Controls</h3>
+                <p class="feature-description">
+                    Master intuitive touch controls that give you complete freedom to navigate 
+                    through the ever-changing geometric landscape.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">💎</div>
+                <h3 class="feature-title">Collect & Survive</h3>
+                <p class="feature-description">
+                    Gather glowing cyan orbs while avoiding dangerous red obstacles and 
+                    mysterious black holes that can end your journey instantly.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Progressive Difficulty</h3>
+                <p class="feature-description">
+                    Challenge yourself with increasingly complex levels that test your 
+                    reflexes, timing, and spatial awareness.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Ad-Free Experience</h3>
+                <p class="feature-description">
+                    Upgrade to Pro for an uninterrupted gaming experience with no ads 
+                    and exclusive features for the ultimate challenge.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">iOS Optimized</h3>
+                <p class="feature-description">
+                    Built specifically for iOS with support for all device sizes, 
+                    Dynamic Island compatibility, and smooth 60fps gameplay.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="section screenshots" id="screenshots">
+        <h2 class="section-title fade-in">Game Screenshots</h2>
+        <p class="fade-in">See Wavefield Bubble in action</p>
+        <div class="screenshot-grid">
+            <!-- TODO: Add game screenshots here -->
+            <!-- Replace these placeholders with actual app screenshots -->
+            <div class="screenshot-placeholder fade-in">
+                📱 Main Menu Screenshot
+                <!-- <img src="screenshots/main-menu.png" alt="Main Menu" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;"> -->
+            </div>
+            <div class="screenshot-placeholder fade-in">
+                🎮 Gameplay Screenshot
+                <!-- <img src="screenshots/gameplay.png" alt="Gameplay" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;"> -->
+            </div>
+            <div class="screenshot-placeholder fade-in">
+                🌟 Tutorial Screenshot
+                <!-- <img src="screenshots/tutorial.png" alt="Tutorial" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;"> -->
+            </div>
+            <div class="screenshot-placeholder fade-in">
+                ⚙️ Settings Screenshot
+                <!-- <img src="screenshots/settings.png" alt="Settings" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;"> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section download" id="download">
+        <h2 class="download-title fade-in">Ready to Play?</h2>
+        <p class="download-description fade-in">
+            Download Wavefield Bubble now and experience the most unique physics-based game on iOS
+        </p>
+        <div class="cta-buttons fade-in">
+            <!-- TODO: Replace with actual App Store link when available -->
+            <a href="#" class="btn btn-primary">Download on App Store</a>
+            <a href="mailto:zeelworksmail@gmail.com" class="btn btn-secondary">Contact Developer</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms & Conditions</a>
+            <a href="mailto:zeelworksmail@gmail.com">Contact</a>
+        </div>
+        <p>&copy; 2024 Wavefield Bubble. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Create animated background mesh
+        function createBackgroundMesh() {
+            const container = document.getElementById('backgroundMesh');
+            const triangleCount = 50;
+
+            for (let i = 0; i < triangleCount; i++) {
+                const triangle = document.createElement('div');
+                triangle.className = 'triangle';
+                
+                const size = Math.random() * 10 + 5;
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                const animationDelay = Math.random() * 4;
+
+                triangle.style.left = x + 'px';
+                triangle.style.top = y + 'px';
+                triangle.style.borderLeft = size + 'px solid transparent';
+                triangle.style.borderRight = size + 'px solid transparent';
+                triangle.style.borderBottom = size * 1.732 + 'px solid rgba(0, 255, 255, 0.3)';
+                triangle.style.animationDelay = animationDelay + 's';
+
+                container.appendChild(triangle);
+            }
+        }
+
+        // Scroll animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Create floating orbs periodically
+        function createFloatingOrb() {
+            const orb = document.createElement('div');
+            orb.className = 'floating-orb';
+            orb.style.left = Math.random() * 100 + '%';
+            orb.style.animationDelay = '0s';
+            document.body.appendChild(orb);
+
+            setTimeout(() => {
+                orb.remove();
+            }, 8000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackgroundMesh();
+            initSmoothScrolling();
+            handleScrollAnimations();
+            
+            // Create floating orbs periodically
+            setInterval(createFloatingOrb, 3000);
+        });
+
+        // Handle scroll events
+        window.addEventListener('scroll', handleScrollAnimations);
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const container = document.getElementById('backgroundMesh');
+            container.innerHTML = '';
+            createBackgroundMesh();
+        });
+    </script>
+</body>
+</html>
