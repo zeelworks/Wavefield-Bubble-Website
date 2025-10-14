@@ -538,7 +538,7 @@
         <div class="cta-buttons fade-in">
             <!-- TODO: Replace with actual App Store link when available -->
             <a href="#" class="btn btn-primary">Download on App Store</a>
-            <a href="mailto:zeelworksmail@gmail.com" class="btn btn-secondary">Contact Developer</a>
+            <a class="btn btn-secondary contact-link" data-contact="email" data-user="zeelworks" data-domain="gmail.com" data-display="Contact Developer"><noscript>zeelworks [at] gmail [dot] com</noscript></a>
         </div>
     </section>
 
@@ -547,8 +547,9 @@
         <div class="footer-links">
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="terms-conditions.html">Terms & Conditions</a>
-            <a href="mailto:zeelworksmail@gmail.com">Contact</a>
+            <a class="contact-link" data-contact="email" data-user="zeelworks" data-domain="gmail.com" data-display="Contact"><noscript>zeelworks [at] gmail [dot] com</noscript></a>
         </div>
+        <p>Zeelworks · PO Box C6124, Kwikstaartlaan 42, 3704 GS Zeist, Netherlands · <span class="contact-inline" data-contact="email" data-user="zeelworks" data-domain="gmail.com"><noscript>zeelworks [at] gmail [dot] com</noscript></span> · <span class="contact-inline" data-contact="phone" data-number="+31651280682" data-display="+31 6 51280682"><noscript>+31 6 51280682</noscript></span></p>
         <p>&copy; 2025 Wavefield Bubble. All rights reserved.</p>
     </footer>
 
@@ -621,8 +622,55 @@
             }, 8000);
         }
 
+        function revealContactInfo() {
+            const emailNodes = document.querySelectorAll('[data-contact="email"]');
+            emailNodes.forEach(node => {
+                const user = node.dataset.user;
+                const domain = node.dataset.domain;
+                if (!user || !domain) {
+                    return;
+                }
+                const subject = node.dataset.subject ? `?subject=${encodeURIComponent(node.dataset.subject)}` : '';
+                const display = node.dataset.display || `${user}@${domain}`;
+                const href = `mailto:${user}@${domain}${subject}`;
+
+                if (node.tagName.toLowerCase() === 'a') {
+                    node.setAttribute('href', href);
+                    node.textContent = display;
+                } else {
+                    const anchor = document.createElement('a');
+                    anchor.href = href;
+                    anchor.textContent = display;
+                    anchor.className = node.className;
+                    node.replaceWith(anchor);
+                }
+            });
+
+            const phoneNodes = document.querySelectorAll('[data-contact="phone"]');
+            phoneNodes.forEach(node => {
+                const number = node.dataset.number;
+                if (!number) {
+                    return;
+                }
+                const tel = number.replace(/\s+/g, '');
+                const display = node.dataset.display || number;
+
+                if (node.tagName.toLowerCase() === 'a') {
+                    node.setAttribute('href', `tel:${tel}`);
+                    node.textContent = display;
+                } else {
+                    const anchor = document.createElement('a');
+                    anchor.href = `tel:${tel}`;
+                    anchor.textContent = display;
+                    anchor.className = node.className;
+                    node.replaceWith(anchor);
+                }
+            });
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            revealContactInfo();
             createBackgroundMesh();
             initSmoothScrolling();
             handleScrollAnimations();
